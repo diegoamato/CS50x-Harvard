@@ -1,5 +1,7 @@
-    1. peça para o usuario informar a altura
-    2. se a altura for menor que 1 ou maior que 8, peça para
-o usuário informar a altura de novo
-    3. iterar de 1 ate altura
-        3.1 
+    1. ask the user to inform the height
+    2. if the height is less than 1 or greater than 8, ask to
+the user enter the height again
+    3. iterar de i=1 ate i=altura
+        3.1 imprimir i # e pular linha
+        3.2 pular linhas ate atingir i linhas
+    4. alinhar piramide a esquerda
