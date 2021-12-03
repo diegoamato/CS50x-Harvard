@@ -1,0 +1,5 @@
+    1. peça para o usuario informar a altura
+    2. se a altura for menor que 1 ou maior que 8, peça para
+o usuário informar a altura de novo
+    3. iterar de 1 ate altura
+        3.1 
