@@ -2,10 +2,12 @@
 #include <cs50.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 //Prototypes
 int count_letters(string text);
 int count_words(string text);
+int count_sentences(string text);
 
 int main(void)
 {
@@ -14,9 +16,28 @@ int main(void)
 
     int letters = count_letters(text);
     int words = count_words(text);
+    int sentences = count_sentences(text);
 
-    printf("%i letter(s)\n", letters);
-    printf("%i word(s)\n", words);
+    //Coleman-Liau index calculate
+    float L = (100 * (float) letters) / (float) words;
+    float S = (100 * (float) sentences) / (float) words;
+
+    int index = round(0.0588 * L - 0.296 * S - 15.8);
+
+    //Print the result
+    if (index >= 16)
+    {
+        printf("Grade 16+\n");
+    }
+    else if (index < 1)
+    {
+        printf("Before Grade 1\n");
+    }
+    else
+    {
+        printf("Grade %i\n", index);
+    }
+
 }
 
 
@@ -51,4 +72,20 @@ int count_words(string text)
         }
     }
     return cw;
+}
+
+//Count the sentences of the text
+int count_sentences(string text)
+{
+    int cs = 0;
+
+    for (int i = 0, n = strlen(text); i < n; i++)
+    {
+        //Sum <. ! ?> in the text
+        if ((text[i] - '.') == 0 || (text[i] - '?') == 0 || (text[i] - '!') == 0)
+        {
+            cs++;
+        }
+    }
+    return cs;
 }
