@@ -5,10 +5,12 @@
 #include <ctype.h>
 
 //Prototypes
-int substitution_cipher(string ciphertext);
+bool all_alphabetics(string text);
 bool test_letters(string text);
-bool all_alphabetics (string text);
+string substitution_cipher(string plaintext, string key);
+//###############################################
 
+//Implements main program
 int main(int argc, string argv[])
 {
     //Delimits that the program must start with only 1 argument
@@ -23,25 +25,32 @@ int main(int argc, string argv[])
         printf("Key must contain 26 characters.\n");
         return 1;
     }
-    //Test if all characters are alphabetics
+    //Tests if all characters are alphabetics
     else if (all_alphabetics(argv[1]))
     {
-        printf("Only 26 alphabetic characters are accepted in the key\n");
+        printf("Only alphabetic characters are accepted in the key\n");
         return 1;
     }
-    //Test if all letter are differents
+    //Tests if all letters are differents
     else if (test_letters(argv[1]))
     {
-        printf("The key must containing each letter exactly once\n");
+        printf("Key must containing each letter exactly once\n");
         return 1;
     }
+
+    //Get key and plaintext with user
     else
     {
-        substitution_cipher(argv[1]);
+        string plaintext = get_string("plaintext: ");
+        printf("ciphertext: ");
+        printf("%s\n", substitution_cipher(plaintext, argv[1]));
+        return 0;
     }
 }
+//###############################################
 
-bool all_alphabetics (string text)
+//Implements the test to verify if all characters are letters
+bool all_alphabetics(string text)
 {
     int k = 0;
 
@@ -66,16 +75,13 @@ bool all_alphabetics (string text)
         return false;
     }
 }
+//###############################################
 
-int substitution_cipher(string text)
-{
-    printf("implement\n");
-    return 0;
-}
-
+//Implements the test to verify if all letters are differents
 bool test_letters(string text)
 {
     int k = 0;
+
     for (int i = 0, n = strlen(text) - 1; i < n; i++)
     {
         for (int j = i + 1, z = strlen(text); j < z; j++)
@@ -93,17 +99,56 @@ bool test_letters(string text)
 
     if (k == 0)
     {
-        printf("%i\n", k);
         return false;
     }
     else if (k > 0)
     {
-        printf("%i\n", k);
         return true;
     }
     else
     {
-        printf("ERROR!\n");
-        return false;
+        return true;
     }
 }
+//###############################################
+
+//Implements the substitution
+string substitution_cipher(string plaintext, string key)
+{
+    int letters[] = {97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122};
+    string ciphertext = plaintext;
+
+    for (int i = 0, n = strlen(key); i < n; i++)
+    {
+        key[i] = toupper(key[i]);
+    }
+
+    for (int i = 0, n = strlen(plaintext); i < n; i++)
+    {
+        if (islower(plaintext[i]))
+        {
+            for (int j = 0; j < 26; j++)
+            {
+                if ((int) plaintext[i] == letters[j])
+                {
+                    ciphertext[i] = key[j];
+                }
+            }
+            ciphertext[i] = tolower(ciphertext[i]);
+        }
+        else if (isupper(plaintext[i]))
+        {
+            plaintext[i] = tolower(plaintext[i]);
+
+            for (int j = 0; j < 26; j++)
+            {
+                if ((int) plaintext[i] == letters[j])
+                {
+                    ciphertext[i] = key[j];
+                }
+            }
+        }
+    }
+    return ciphertext;
+}
+//###############################################
