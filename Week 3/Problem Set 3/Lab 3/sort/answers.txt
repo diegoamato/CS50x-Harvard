@@ -1,0 +1,60 @@
+sort1 uses: Bubble Sort
+
+How do you know?: I tested all files as shown in the tables below.
+And I verified that, sort2 implements merge, and in the comparison
+between sort1 and sort3, sort1 turned out faster in the easier scenarios,
+confirming that it has an O(n) while sort3 has an O(n²).
+
+      SORT1     TIME(s)
+sorted  5000    00.012s
+sorted 10000    00.064s
+sorted 50000    07.284s
+
+rever.  5000    00.069s
+rever. 10000    00.434s
+rever. 50000    11.995s
+
+random  5000    00.093s
+random 10000    00.472s
+random 50000    17.114s
+
+
+sort2 uses: Merge Sort
+
+How do you know?: In all tested scenarios she was the fastest.
+Furthermore, the more difficult the scenario was, the performance
+remained stable.
+
+      SORT2     TIME(s)
+sorted  5000    00.012s
+sorted 10000    00.029s
+sorted 50000    05.438s
+
+rever.  5000    00.012s
+rever. 10000    00.022s
+rever. 50000    03.641s
+
+random  5000    00.015s
+random 10000    00.030s
+random 50000    02.138s
+
+sort3 uses: Selection Sort
+
+How do you know?: As explained in the analysis of sort1 and,
+added to what was said, sort3 also proved to be stable as the
+scenario became more difficult, showing that both in O and in
+Omega it maintains the same performance constant.
+
+
+      SORT3     TIME(s)
+sorted  5000    00.116s
+sorted 10000    00.304s
+sorted 50000    08.547s
+
+rever.  5000    00.093s
+rever. 10000    00.210s
+rever. 50000    09.510s
+
+random  5000    00.035s
+random 10000    00.193s
+random 50000    07.905s
