@@ -145,24 +145,27 @@ void add_pairs(void)
             }
         }
     }
+
+    /*
     //Test to verify that preference data has been correctly summed and stored
-    //for (int p = 0; p < candidate_count; p++)
-    //{
-    //    for (int t = 0; t < candidate_count; t++)
-    //    {
-    //        printf("%i ", preferences[p][t]);
-    //    }
-    //    printf("\n");
-    //}
-    //printf("\n");
-    //printf("Total Pairs: %i\n\n", pair_count);
+    for (int p = 0; p < candidate_count; p++)
+    {
+        for (int t = 0; t < candidate_count; t++)
+        {
+            printf("%i ", preferences[p][t]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    printf("Total Pairs: %i\n\n", pair_count);
 
     //Testing whether pairs were stored correctly
-    //for (int z = 0; z < pair_count; z++)
-    //{
-    //    printf("Winner: %i, Loser: %i \n", pairs[z].winner, pairs[z].loser);
-    //}
-    //printf("\n");
+    for (int z = 0; z < pair_count; z++)
+    {
+        printf("Winner: %i, Loser: %i \n", pairs[z].winner, pairs[z].loser);
+    }
+    printf("\n");
+    */
 
     return;
 }
@@ -189,12 +192,14 @@ void sort_pairs(void)
         }
     }
 
+    /*
     //Test to verify if the array was placed in decreasing order
-    //for (int z = 0; z < pair_count; z++)
-    //{
-    //    printf("Winner: %i, Loser: %i \n", pairs[z].winner, pairs[z].loser);
-    //}
-    //printf("\n");
+    for (int z = 0; z < pair_count; z++)
+    {
+        printf("Winner: %i, Loser: %i \n", pairs[z].winner, pairs[z].loser);
+    }
+    printf("\n");
+    */
 
     return;
 }
@@ -202,28 +207,63 @@ void sort_pairs(void)
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
+    int test_cycle1 = 0;
+    int test_cycle2 = 0;
+
     for (int i = 0; i < pair_count; i++)
     {
-        locked[pairs[i].winner][pairs[i].loser] = true;
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[pairs[i].loser][j])
+            {
+                test_cycle1++;
+            }
+            else
+            {
+                test_cycle1 += 0;
+            }
+        }
+        
+        for (int k = 0; k < candidate_count; k++)
+        {
+            if (locked[k][pairs[i].winner])
+            {
+                test_cycle2++;
+            }
+            else
+            {
+                test_cycle2 += 0;
+            }
+        }
+
+        if (test_cycle1 == 0 || (test_cycle1 != 0 && test_cycle2 == 0))
+        {
+            locked[pairs[i].winner][pairs[i].loser] = true;
+        }
+        
+        test_cycle1 = 0;
+        test_cycle2 = 0;
     }
 
+    /*
     //Test to check whether pairs were locked in the chart
-    //for (int p = 0; p < candidate_count; p++)
-    //{
-    //    for (int t = 0; t < candidate_count; t++)
-    //    {
-    //        if (locked[p][t])
-    //        {
-    //            printf("1 ");
-    //        }
-    //        else
-    //        {
-    //            printf("0 ");
-    //        }
-    //    }
-    //    printf("\n");
-    //}
-    //printf("\n");
+    for (int p = 0; p < candidate_count; p++)
+    {
+        for (int t = 0; t < candidate_count; t++)
+        {
+            if (locked[p][t])
+            {
+                printf("1 ");
+            }
+            else
+            {
+                printf("0 ");
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
+    */
 
     return;
 }
@@ -231,6 +271,31 @@ void lock_pairs(void)
 // Print the winner of the election
 void print_winner(void)
 {
-    printf("Diego\n");
+    int test_winner = 0;
+    
+    //Lock the column and test if there are any locked lines
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[j][i] == true)
+            {
+                test_winner++;
+            }
+            else
+            {
+                test_winner += 0;
+            }
+        }
+        
+        //If all rows are free, the candidate in column 'i' is one of the winners
+        if (test_winner == 0)
+        {
+            printf("%s\n", candidates[i]);
+        }
+        
+        test_winner = 0;
+    }
+    
     return;
 }
