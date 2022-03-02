@@ -1,5 +1,13 @@
 // Implements a dictionary's functionality
-
+// Diego Martins 03.02.22 - Porto Alegre/RS - Brazil
+/*
+=====
+I finished Speller Problem Set with the help of the own tutorial
+in the CS50 course and complemented it with the video from th
+Algorithms Illustrator Youtube Channel.
+Link Video: https://www.youtube.com/watch?v=HsnjdbHMZO8
+=====
+*/
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdlib.h>
